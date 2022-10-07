@@ -5,11 +5,30 @@
                  :src="data.avatar"></el-avatar>
     </div>
     <div class="chat_msg">
-      <div class="user_name">
-        <span>{{data.name}}</span>
+      <div class="chat_header">
+        <div class="user_title">
+          <span class="user_level">Lv.{{data.level}}</span>
+          <el-tag type="warning"
+                  effect="dark"
+                  size="mini"
+                  color="#FFB400">{{data.title}}</el-tag>
+        </div>
+        <div class="user_name">
+          {{data.name}}
+        </div>
       </div>
       <div class="user_msg">
-        <div>
+        <div v-if="type === 'broadcast_image'">
+          <el-image style="width: 200px;"
+                    :src="data.image"
+                    :preview-src-list="[data.image]">
+          </el-image>
+        </div>
+        <div v-else-if="type === 'broadcast_audio'">
+          <audio :src="audioPrefix + data.audio"
+                 controls="controls"></audio>
+        </div>
+        <div v-else>
           {{data.message}}
         </div>
       </div>
@@ -30,12 +49,17 @@ export default {
         return {}
       },
     },
+    type: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       message: {},
       selfClass: '',
       nowTime: '',
+      audioPrefix: 'data:audio/wav;base64,',
     }
   },
   methods: {},
@@ -82,10 +106,16 @@ $user_msg_bgcolor: #fefefe;
   display: flex;
   .chat_msg {
     margin: 10px;
-    .user_name {
+    .chat_header {
       font-size: 12px;
       color: #909399;
       margin-bottom: 5px;
+
+      .user_level {
+        color: #ee9ebb;
+        display: inline-block;
+        margin-right: 10px;
+      }
     }
     .user_msg {
       position: relative;
@@ -97,21 +127,25 @@ $user_msg_bgcolor: #fefefe;
     }
     .user_msg::after {
       content: '';
+      display: block;
       position: absolute;
       top: -1px;
-      left: -10px;
+      left: -20px;
       border-top: 0px solid transparent;
       border-bottom: 10px solid transparent;
       border-right: 10px solid $user_msg_bordercolor;
+      border-left: 10px solid transparent;
     }
     .user_msg::before {
       content: '';
       position: absolute;
+      display: block;
       top: 0px;
-      left: -8px;
+      left: -18px;
       border-top: 0px solid transparent;
-      border-bottom: 8px solid transparent;
-      border-right: 8px solid $user_msg_bgcolor;
+      border-bottom: 10px solid transparent;
+      border-right: 10px solid $user_msg_bgcolor;
+      border-left: 10px solid transparent;
       z-index: 10;
     }
 
@@ -120,6 +154,7 @@ $user_msg_bgcolor: #fefefe;
       font-size: 6px;
       display: flex;
       justify-content: right;
+      margin-top: 5px;
 
       > div {
         padding: 0 5px;
@@ -134,5 +169,32 @@ $user_msg_bgcolor: #fefefe;
 .chat_msg_warp.self {
   justify-content: right;
   flex-direction: row-reverse;
+
+  .user_msg {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 5px;
+  }
+  .user_msg::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -20px;
+    left: unset;
+    border-top: 0px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-left: 10px solid $user_msg_bordercolor;
+  }
+  .user_msg::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: -18px;
+    left: unset;
+    border-top: 0px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-left: 10px solid $user_msg_bgcolor;
+  }
 }
 </style>
