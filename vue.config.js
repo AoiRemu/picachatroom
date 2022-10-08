@@ -10,11 +10,6 @@ module.exports = {
             propList: ['*'],
             selectorBlackList: ['.van-'], // 排除移动端使用了vant库
           }),
-          require('postcss-pxtorem')({
-            rootValue: 37.5,
-            exclude: 'pc', // 排除pc
-            propList: ['*'],
-          }),
         ],
       },
     },

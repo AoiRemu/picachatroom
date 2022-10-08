@@ -200,7 +200,7 @@ export default {
     padding: 10px;
     .input_chat {
       width: 100%;
-      height: calc(100vh - 700px);
+      height: 120px;
       :deep .el-textarea {
         height: 100%;
         .el-textarea__inner {
