@@ -2,7 +2,8 @@
   <div :class="'chat_msg_warp ' + selfClass">
     <div class="chat_avatar">
       <el-avatar :size="50"
-                 :src="data.avatar"></el-avatar>
+                 :src="data.avatar"
+                 @click.native="showUserInfo"></el-avatar>
     </div>
     <div class="chat_msg">
       <div class="chat_header">
@@ -37,6 +38,18 @@
         <div class="system_type">{{ data.platform }}</div>
       </div>
     </div>
+    <el-dialog title="用户信息"
+               :visible.sync="userInfoVisibleSync"
+               append-to-body
+               width="400px"
+               @close="userInfoVisibleSync = false">
+      <div>
+        <div class="dialog_img_warp">
+          <img :src="data.avatar"
+               alt="头像" />
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -60,9 +73,14 @@ export default {
       selfClass: '',
       nowTime: '',
       audioPrefix: 'data:audio/wav;base64,',
+      userInfoVisibleSync: false,
     }
   },
-  methods: {},
+  methods: {
+    showUserInfo() {
+      this.userInfoVisibleSync = true
+    },
+  },
   mounted() {
     // this.message = {
     //   data: {
@@ -124,6 +142,7 @@ $user_msg_bgcolor: #fefefe;
       border-top-left-radius: 0px;
       border: 1px solid $user_msg_bordercolor;
       background-color: $user_msg_bgcolor;
+      font-size: 16px;
     }
     .user_msg::after {
       content: '';
@@ -195,6 +214,14 @@ $user_msg_bgcolor: #fefefe;
     border-bottom: 10px solid transparent;
     border-right: 10px solid transparent;
     border-left: 10px solid $user_msg_bgcolor;
+  }
+}
+
+.dialog_img_warp {
+  margin: 0 auto;
+  width: 280px;
+  img {
+    width: 100%;
   }
 }
 </style>

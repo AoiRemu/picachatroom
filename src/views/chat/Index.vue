@@ -2,7 +2,7 @@
   <div class="main_warp">
     <div class="nav_warp">
       <div class="online_number_warp">
-        <el-tag v-if="onlineNumber > 0"
+        <el-tag v-show="isShowOnlineNumber"
                 type="warning"
                 effect="dark">在线人数:{{ onlineNumber }}</el-tag>
       </div>
@@ -87,6 +87,7 @@ export default {
       },
       msgTypeList: ['broadcast_message', 'broadcast_audio', 'broadcast_image'],
       onlineNumber: 0,
+      isShowOnlineNumber: false,
     }
   },
   computed: {
@@ -122,6 +123,7 @@ export default {
 
         if (msgModel.type === 'new_connection') {
           this.onlineNumber = msgModel.data.connections
+          this.showOnlineNumber()
         } else if (this.msgTypeList.indexOf(msgModel.type) > -1) {
           this.msgList.push(msgModel)
           this.scrollToEnd()
@@ -157,6 +159,12 @@ export default {
         })
       }
     },
+    showOnlineNumber() {
+      this.isShowOnlineNumber = true
+      setTimeout(() => {
+        this.isShowOnlineNumber = false
+      }, 3000)
+    },
   },
   mounted() {
     // for (let index = 0; index < 20; index++) {
@@ -176,6 +184,12 @@ export default {
   .nav_warp {
     display: flex;
     justify-content: center;
+
+    .online_number_warp {
+      position: fixed;
+      top: 10px;
+      left: auto;
+    }
   }
   .chat_message_container {
     height: 600px;
@@ -186,7 +200,7 @@ export default {
     padding: 10px;
     .input_chat {
       width: 100%;
-      height: 200px;
+      height: calc(100vh - 700px);
       :deep .el-textarea {
         height: 100%;
         .el-textarea__inner {
