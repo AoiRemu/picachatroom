@@ -11,3 +11,12 @@
 
 
 42["send_message","{\"at\":\"嗶咔_打怪机器人\",\"audio\":\"\",\"avatar\":\"https:\/\/storage.wikawika.xyz\/static\/04e2a7a3-34a7-469f-9320-cffac35e1ad3.jpg\",\"block_user_id\":\",62cd384c566a6605662181e9\",\"character\":\"https:\/\/pica-pica.wikawika.xyz\/special\/frame-266.png?g\\u003d2\",\"email\":\"futarisuki\",\"gender\":\"m\",\"image\":\"\",\"level\":4,\"message\":\"@悄悄话 111\",\"name\":\"神经变态绅士耶\",\"platform\":\"android\",\"reply\":\"\",\"reply_name\":\"\",\"title\":\"纯爱蕾姆女仆娇小阔爱温柔体贴病娇状态赛高\",\"type\":3,\"unique_id\":\"\",\"user_id\":\"58bc4224712c5d0778c5ec1d\",\"verified\":false}"]
+
+
+悄悄话
+[
+    "receive_notification",
+    {
+        "message": "【君惜佳人】正在跟【新菜fufu】悄悄話"
+    }
+]

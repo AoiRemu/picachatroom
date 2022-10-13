@@ -1,12 +1,14 @@
 <template>
   <div :class="'chat_msg_warp ' + selfClass">
-    <div class="chat_avatar">
-      <el-avatar :size="50"
+    <div class="chat_avatar"
+         @contextmenu.prevent="onAvatarContentMenu">
+      <el-avatar :size="72"
                  :src="data.avatar"
                  @click.native="showUserInfo"></el-avatar>
     </div>
     <div class="chat_msg">
-      <div class="chat_header">
+      <div class="chat_header"
+           @touchend.prevent="onAvatarContentMenu">
         <div class="user_title">
           <span class="user_level">Lv.{{data.level}}</span>
           <el-tag type="warning"
@@ -18,19 +20,32 @@
           {{data.name}}
         </div>
       </div>
-      <div class="user_msg">
-        <div v-if="type === 'broadcast_image'">
-          <el-image style="width: 200px;"
-                    :src="data.image"
-                    :preview-src-list="[data.image]">
-          </el-image>
+      <div class="user_msg"
+           @contextmenu.prevent="onMsgContentMenu"
+           @touchend.prevent="onMsgContentMenu">
+        <div v-if="data.reply || data.at"
+             class="reply_warp">
+          <div class="reply_name">
+            {{data.reply_name ? data.reply_name : `@ ${data.at}`}}
+          </div>
+          <div class="reply_msg">
+            {{data.reply}}
+          </div>
         </div>
-        <div v-else-if="type === 'broadcast_audio'">
-          <audio :src="audioPrefix + data.audio"
-                 controls="controls"></audio>
-        </div>
-        <div v-else>
-          {{data.message}}
+        <div class="msg_warp">
+          <div v-if="type === 'broadcast_image'">
+            <el-image style="width: 200px;"
+                      :src="data.image"
+                      :preview-src-list="[data.image]">
+            </el-image>
+          </div>
+          <div v-else-if="type === 'broadcast_audio'">
+            <audio :src="audioPrefix + data.audio"
+                   controls="controls"></audio>
+          </div>
+          <div v-else>
+            {{data.message}}
+          </div>
         </div>
       </div>
       <div class="system_info">
@@ -79,6 +94,50 @@ export default {
   methods: {
     showUserInfo() {
       this.userInfoVisibleSync = true
+    },
+    onMsgContentMenu(event) {
+      this.$contextmenu({
+        items: [
+          {
+            label: '回复',
+            onClick: () => {
+              const replyParams = {
+                reply_name: this.data.name,
+                reply: this.data.message,
+              }
+              this.$emit('reply', replyParams)
+            },
+          },
+        ],
+        event,
+        customClass: 'custom-class',
+        zIndex: 3,
+        minWidth: 230,
+      })
+      return false
+    },
+    onAvatarContentMenu(event) {
+      this.$contextmenu({
+        items: [
+          {
+            label: `@ ${this.data.name}`,
+            onClick: () => {
+              this.$emit('userAt', this.data.name)
+            },
+          },
+          {
+            label: '悄悄话',
+            onClick: () => {
+              this.$emit('privateChat', this.data.name)
+            },
+          },
+        ],
+        event,
+        customClass: 'custom-class',
+        zIndex: 3,
+        minWidth: 230,
+      })
+      return false
     },
   },
   mounted() {
@@ -143,6 +202,21 @@ $user_msg_bgcolor: #fefefe;
       border: 1px solid $user_msg_bordercolor;
       background-color: $user_msg_bgcolor;
       font-size: 16px;
+
+      .reply_warp {
+        background-color: #ffd9df;
+        font-size: 14px;
+        padding: 10px;
+
+        .reply_name {
+          font-weight: bold;
+          padding: 5px 0;
+        }
+      }
+
+      .msg_warp {
+        margin-top: 10px;
+      }
     }
     .user_msg::after {
       content: '';

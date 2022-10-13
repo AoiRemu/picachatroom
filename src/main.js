@@ -7,6 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import moment from 'moment'
 // import 'amfe-flexible'
 import './util/rem'
+import Contextmenu from 'vue-contextmenujs'
+Vue.use(Contextmenu)
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

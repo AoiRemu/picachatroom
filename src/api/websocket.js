@@ -17,7 +17,6 @@ export function Init(params) {
 export function HeartBeats(params) {
   console.log('websocket init')
   let interval = setInterval(function() {
-    console.log(WebSocketClient)
     if (!WebSocketClient || WebSocketClient.readyState !== 1) {
       Init(params)
     }
@@ -27,9 +26,18 @@ export function HeartBeats(params) {
 }
 
 export function ReceiveHandler(rec, renderMessage) {
+  const typeList = [
+    'broadcast_message',
+    'broadcast_audio',
+    'broadcast_image',
+    'new_connection',
+  ]
   const jsonStr = rec.data.replace(/^[0-9]+/, '')
   if (jsonStr) {
     const data = JSON.parse(jsonStr)
+    if (typeList.indexOf(data[0]) === -1) {
+      console.log(data)
+    }
     renderMessage(data)
   }
 }
