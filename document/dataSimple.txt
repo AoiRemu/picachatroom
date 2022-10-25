@@ -20,3 +20,88 @@
         "message": "【君惜佳人】正在跟【新菜fufu】悄悄話"
     }
 ]
+
+登录： post
+  url: https://picaapi.picacomic.com/auth/sign-in
+  请求：{email:'monster0001', password:'1060236893'}
+  响应：{
+    code : 200,
+    message:'success',
+    data: {
+      token: ''
+    }
+  }
+
+打卡： post
+  url:https://picaapi.picacomic.com/users/punch-in
+  请求：{}
+  响应：{
+    code : 200,
+    message:'success',
+    data: {
+      res: {
+        status: 'ok',
+        punchInLastDay: '2022-10-19'
+      }
+    }
+  }
+
+用户信息： get
+  url: https://picaapi.picacomic.com/users/profile
+  请求：{}
+  响应：{
+    code : 200,
+    message:'success',
+    data: {
+      user: {
+        _id: '',
+        birthday: '2001-01-01T 00:00:00Z',
+        email: 'monster0001',
+        gender: 'bot'
+        name:'打怪机器人',
+        slogan:'无情的打怪机器人',
+        title: '萌新',
+        verified : false,
+        exp : 120,
+        level : 1,
+        characters:[],
+        create_at:'2001-01-01T 00:00:00Z',
+        avatar:{
+          originalName: 'avatar.jpg',
+          path:'04e2a7a3-34a7-469f-9320-cffac35e1ad3.jpg',
+          fileServer:'https://storage1.picacomic.com'
+        },
+        isPunched:true
+      }
+    }
+  }
+
+  聊天室信息： get
+  url: https://picaapi.picacomic.com/chat
+  请求：{}
+  响应：{
+    code : 200,
+    message:'success',
+    data: {
+      user: {
+        _id: '',
+        birthday: '2001-01-01T 00:00:00Z',
+        email: 'monster0001',
+        gender: 'bot'
+        name:'打怪机器人',
+        slogan:'无情的打怪机器人',
+        title: '萌新',
+        verified : false,
+        exp : 120,
+        level : 1,
+        characters:[],
+        create_at:'2001-01-01T 00:00:00Z',
+        avatar:{
+          originalName: 'avatar.jpg',
+          path:'04e2a7a3-34a7-469f-9320-cffac35e1ad3.jpg',
+          fileServer:'https://storage1.picacomic.com'
+        },
+        isPunched:true
+      }
+    }
+  }
