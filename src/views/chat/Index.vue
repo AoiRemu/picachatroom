@@ -243,7 +243,9 @@ export default {
     // for (let index = 0; index < 20; index++) {
     //   this.msgList.push(this.msg)
     // }
-
+    if (!this.userInfo) {
+      this.$router.push({ path: '/login' })
+    }
     this.chatUrl = process.env.VUE_APP_PICA_CHAT_HOT_URL
     this.getUserInfoToMsg()
     this.init()
